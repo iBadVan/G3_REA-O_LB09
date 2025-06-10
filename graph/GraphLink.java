@@ -153,7 +153,7 @@ public class GraphLink<E> {
             }
         }
 
-        return null; // Si no hay camino entre v y z
+        return null; 
     }
 
     public String toString() {
