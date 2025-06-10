@@ -54,11 +54,9 @@ public class GraphLink<E> {
     public void removeVertex(E v) {
         Vertex<E> vertexToRemove = searchVertex(v);
         if (vertexToRemove != null) {
-            // Eliminar las aristas que llegan a este vértice desde otros vértices
             for (Vertex<E> vertex : listVertex) {
                 vertex.listAdj.removeIf(edge -> edge.getRefDest().equals(vertexToRemove));
             }
-            // Eliminar el vértice de la lista
             listVertex.remove(vertexToRemove);
         }
     }
@@ -77,23 +75,19 @@ public class GraphLink<E> {
         Vertex<E> startVertex = searchVertex(v);
         if (startVertex == null) return;
 
-        // Marcamos todos los vértices como no visitados al inicio
         for (Vertex<E> vertex : listVertex) {
             vertex.visited = false;
         }
 
-        // Llamamos al método recursivo de DFS
         dfsRecursive(startVertex);
     }
 
     private void dfsRecursive(Vertex<E> vertex) {
         if (vertex.visited) return;
 
-        // Marcar el vértice como visitado y mostrarlo
         vertex.visited = true;
         System.out.println(vertex.getData());
 
-        // Recorrer todos los vértices adyacentes
         for (Edge<E> edge : vertex.listAdj) {
             Vertex<E> adjVertex = edge.getRefDest();
             dfsRecursive(adjVertex);

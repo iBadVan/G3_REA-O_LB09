@@ -107,4 +107,28 @@ public class ListLinked<T> implements Iterable<T> {
             }
         };
     }
+
+    // Método removeIf para eliminar elementos basados en una condición
+    public boolean removeIf(java.util.function.Predicate<T> condition) {
+        if (head == null) return false;
+
+        // Caso si el primer nodo cumple la condición
+        while (head != null && condition.test(head.data)) {
+            head = head.next;
+            size--;
+        }
+
+        if (head == null) return false; // Si la lista se vació
+
+        Node<T> current = head;
+        while (current.next != null) {
+            if (condition.test(current.next.data)) {
+                current.next = current.next.next;
+                size--;
+            } else {
+                current = current.next;
+            }
+        }
+        return true;
+    }
 }
