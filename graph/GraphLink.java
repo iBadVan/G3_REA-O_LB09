@@ -1,6 +1,7 @@
 package graph;
 
 import lista.ListLinked;
+import java.util.*;
 
 public class GraphLink<E> {
     protected ListLinked<Vertex<E>> listVertex;
@@ -92,6 +93,67 @@ public class GraphLink<E> {
             Vertex<E> adjVertex = edge.getRefDest();
             dfsRecursive(adjVertex);
         }
+    }
+
+    public void bfs(E v) {
+        Vertex<E> startVertex = searchVertex(v);
+        if (startVertex == null) return;
+
+        Queue<Vertex<E>> queue = new LinkedList<>();
+        startVertex.visited = true;
+        queue.add(startVertex);
+
+        System.out.println("Recorrido en anchura comenzando en: " + v);
+
+        while (!queue.isEmpty()) {
+            Vertex<E> currentVertex = queue.poll();
+            System.out.println(currentVertex.getData());
+
+            for (Edge<E> edge : currentVertex.listAdj) {
+                Vertex<E> adjVertex = edge.getRefDest();
+                if (!adjVertex.visited) {
+                    adjVertex.visited = true;
+                    queue.add(adjVertex);
+                }
+            }
+        }
+    }
+
+    public List<E> bfsPath(E v, E z) {
+        Vertex<E> startVertex = searchVertex(v);
+        Vertex<E> endVertex = searchVertex(z);
+
+        if (startVertex == null || endVertex == null) return null;
+
+        // Crear una cola para BFS
+        Queue<Vertex<E>> queue = new LinkedList<>();
+        Map<Vertex<E>, Vertex<E>> previous = new HashMap<>(); 
+        startVertex.visited = true;
+        queue.add(startVertex);
+
+        while (!queue.isEmpty()) {
+            Vertex<E> currentVertex = queue.poll();
+
+            if (currentVertex.equals(endVertex)) {
+                List<E> path = new ArrayList<>();
+                for (Vertex<E> at = endVertex; at != null; at = previous.get(at)) {
+                    path.add(at.getData());
+                }
+                Collections.reverse(path); 
+                return path;
+            }
+
+            for (Edge<E> edge : currentVertex.listAdj) {
+                Vertex<E> adjVertex = edge.getRefDest();
+                if (!adjVertex.visited) {
+                    adjVertex.visited = true;
+                    queue.add(adjVertex);
+                    previous.put(adjVertex, currentVertex);
+                }
+            }
+        }
+
+        return null; // Si no hay camino entre v y z
     }
 
     public String toString() {
