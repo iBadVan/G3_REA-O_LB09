@@ -51,6 +51,55 @@ public class GraphLink<E> {
         return false;
     }
 
+    public void removeVertex(E v) {
+        Vertex<E> vertexToRemove = searchVertex(v);
+        if (vertexToRemove != null) {
+            // Eliminar las aristas que llegan a este vértice desde otros vértices
+            for (Vertex<E> vertex : listVertex) {
+                vertex.listAdj.removeIf(edge -> edge.getRefDest().equals(vertexToRemove));
+            }
+            // Eliminar el vértice de la lista
+            listVertex.remove(vertexToRemove);
+        }
+    }
+
+    public void removeEdge(E v, E z) {
+        Vertex<E> vertexV = searchVertex(v);
+        Vertex<E> vertexZ = searchVertex(z);
+
+        if (vertexV != null && vertexZ != null) {
+            vertexV.listAdj.removeIf(edge -> edge.getRefDest().equals(vertexZ));
+            vertexZ.listAdj.removeIf(edge -> edge.getRefDest().equals(vertexV));
+        }
+    }
+
+    public void dfs(E v) {
+        Vertex<E> startVertex = searchVertex(v);
+        if (startVertex == null) return;
+
+        // Marcamos todos los vértices como no visitados al inicio
+        for (Vertex<E> vertex : listVertex) {
+            vertex.visited = false;
+        }
+
+        // Llamamos al método recursivo de DFS
+        dfsRecursive(startVertex);
+    }
+
+    private void dfsRecursive(Vertex<E> vertex) {
+        if (vertex.visited) return;
+
+        // Marcar el vértice como visitado y mostrarlo
+        vertex.visited = true;
+        System.out.println(vertex.getData());
+
+        // Recorrer todos los vértices adyacentes
+        for (Edge<E> edge : vertex.listAdj) {
+            Vertex<E> adjVertex = edge.getRefDest();
+            dfsRecursive(adjVertex);
+        }
+    }
+
     public String toString() {
         return this.listVertex.toString();
     }
