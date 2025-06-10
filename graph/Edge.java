@@ -13,6 +13,10 @@ public class Edge<E> {
         this.weight = weight;
     }
 
+    public Vertex<E> getRefDest() {
+        return refDest;
+    }
+
     public boolean equals(Object o) {
         if (o instanceof Edge<?>) {
             Edge<E> e = (Edge<E>) o;
@@ -23,8 +27,8 @@ public class Edge<E> {
 
     public String toString() {
         if (this.weight > -1)
-            return refDest.getData() + " [" + this.weight + "], ";
+            return refDest.getData() + " [" + this.weight + "] ";
         else
-            return refDest.getData() + ", ";
+            return refDest.getData() + " ";
     }
 }

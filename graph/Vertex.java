@@ -8,7 +8,7 @@ public class Vertex<E> {
 
     public Vertex(E data) {
         this.data = data;
-        listAdj = new ListLinked<Edge<E>>();
+        listAdj = new ListLinked<>();
     }
 
     public E getData() {
