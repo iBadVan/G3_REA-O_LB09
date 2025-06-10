@@ -1,7 +1,7 @@
 package graph;
 
-import lista.ListLinked;
 import java.util.*;
+import lista.ListLinked;
 
 public class GraphLink<E> {
     protected ListLinked<Vertex<E>> listVertex;
@@ -22,6 +22,19 @@ public class GraphLink<E> {
         if (vertexOri != null && vertexDes != null) {
             Edge<E> edgeOri = new Edge<>(vertexDes);
             Edge<E> edgeDes = new Edge<>(vertexOri);
+
+            vertexOri.listAdj.add(edgeOri);
+            vertexDes.listAdj.add(edgeDes);
+        }
+    }
+
+    public void insertEdgeWeight(E verOri, E verDes, int weight) {
+        Vertex<E> vertexOri = searchVertex(verOri);
+        Vertex<E> vertexDes = searchVertex(verDes);
+
+        if (vertexOri != null && vertexDes != null) {
+            Edge<E> edgeOri = new Edge<>(vertexDes, weight);
+            Edge<E> edgeDes = new Edge<>(vertexOri, weight);
 
             vertexOri.listAdj.add(edgeOri);
             vertexDes.listAdj.add(edgeDes);
@@ -125,9 +138,8 @@ public class GraphLink<E> {
 
         if (startVertex == null || endVertex == null) return null;
 
-        // Crear una cola para BFS
         Queue<Vertex<E>> queue = new LinkedList<>();
-        Map<Vertex<E>, Vertex<E>> previous = new HashMap<>(); 
+        Map<Vertex<E>, Vertex<E>> previous = new HashMap<>();
         startVertex.visited = true;
         queue.add(startVertex);
 
@@ -139,7 +151,7 @@ public class GraphLink<E> {
                 for (Vertex<E> at = endVertex; at != null; at = previous.get(at)) {
                     path.add(at.getData());
                 }
-                Collections.reverse(path); 
+                Collections.reverse(path);
                 return path;
             }
 
@@ -153,7 +165,64 @@ public class GraphLink<E> {
             }
         }
 
-        return null; 
+        return null;
+    }
+
+    public boolean isConexo() {
+        if (listVertex.size() == 0) return true;
+
+        dfs(listVertex.get(0).getData());
+
+        for (Vertex<E> vertex : listVertex) {
+            if (!vertex.visited) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public Stack<E> Dijkstra(E v, E w) {
+        Vertex<E> startVertex = searchVertex(v);
+        Vertex<E> endVertex = searchVertex(w);
+
+        if (startVertex == null || endVertex == null) return null;
+
+        Map<Vertex<E>, Integer> distances = new HashMap<>();
+        Map<Vertex<E>, Vertex<E>> previous = new HashMap<>();
+        PriorityQueue<Vertex<E>> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get));
+
+        for (Vertex<E> vertex : listVertex) {
+            distances.put(vertex, Integer.MAX_VALUE);
+            previous.put(vertex, null);
+        }
+
+        distances.put(startVertex, 0);
+        pq.add(startVertex);
+
+        while (!pq.isEmpty()) {
+            Vertex<E> currentVertex = pq.poll();
+
+            if (currentVertex.equals(endVertex)) break;
+
+            for (Edge<E> edge : currentVertex.listAdj) {
+                Vertex<E> neighbor = edge.getRefDest();
+                int newDist = distances.get(currentVertex) + edge.getWeight();
+
+                if (newDist < distances.get(neighbor)) {
+                    distances.put(neighbor, newDist);
+                    previous.put(neighbor, currentVertex);
+                    pq.add(neighbor);
+                }
+            }
+        }
+
+        Stack<E> path = new Stack<>();
+        for (Vertex<E> at = endVertex; at != null; at = previous.get(at)) {
+            path.push(at.getData());
+        }
+
+        return path;
     }
 
     public String toString() {

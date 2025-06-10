@@ -17,6 +17,10 @@ public class Edge<E> {
         return refDest;
     }
 
+    public int getWeight() {
+        return weight;  // Método para obtener el peso de la arista
+    }
+
     public boolean equals(Object o) {
         if (o instanceof Edge<?>) {
             Edge<E> e = (Edge<E>) o;
