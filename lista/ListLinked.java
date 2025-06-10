@@ -1,6 +1,8 @@
 package lista;
 
-public class ListLinked<T> {
+import java.util.Iterator;
+
+public class ListLinked<T> implements Iterable<T> {
 
     private Node<T> head;
     private int size;
@@ -84,5 +86,25 @@ public class ListLinked<T> {
         for (int i = 0; i < index; i++) current = current.next;
 
         return current.data;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node<T> current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) throw new java.util.NoSuchElementException();
+                T data = current.data;
+                current = current.next;
+                return data;
+            }
+        };
     }
 }
