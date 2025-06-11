@@ -228,29 +228,5 @@ public class GraphLink<E> {
     public String toString() {
         return this.listVertex.toString();
     }
-
-    public int getDegree(VertexObj<V, E> vertex) {
-        int degree = 0;
-        for (EdgeObj<V, E> edge : secEdge) {
-            if (edge.endVertex1.equals(vertex) || edge.endVertex2.equals(vertex)) {
-                degree++;
-            }
-        }
-        return degree;
-    }
-
-    public boolean isPath() {
-        int n = secVertex.size();
-        int startEndCount = 0;
-        for (VertexObj<V, E> vertex : secVertex) {
-            int degree = getDegree(vertex);
-            if (degree == 1) {
-                startEndCount++;
-            } else if (degree != 2) {
-                return false;
-            }
-        }
-        return startEndCount == 2;
-    }
     
 }
