@@ -3,12 +3,12 @@ package graph;
 public class VertexObj<V, E> {
     protected V info;
     protected int position;
-    public boolean visited; 
+    public boolean visited;
 
     public VertexObj(V info, int position) {
         this.info = info;
         this.position = position;
-        this.visited = false; 
+        this.visited = false;
     }
 
     public V getInfo() {
