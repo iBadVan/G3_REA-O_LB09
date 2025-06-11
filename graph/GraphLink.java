@@ -301,4 +301,16 @@ public class GraphLink<E> {
             }
         }
     }
+
+    public void printAdjacencyList() {
+        for (Vertex<E> vertex : listVertex) {
+            System.out.print(vertex.getData() + ": ");
+            for (Edge<E> edge : vertex.listAdj) {
+                System.out.print(edge.getRefDest().getData() + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    
 }
