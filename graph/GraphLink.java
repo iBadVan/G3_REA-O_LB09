@@ -339,4 +339,20 @@ public class GraphLink<E> {
             System.out.println();
         }
     }
+
+    public boolean isIsomorphic(GraphLink<E> otherGraph) {
+        if (this.listVertex.size() != otherGraph.listVertex.size()) {
+            return false; 
+        }
+
+        for (Vertex<E> vertex : this.listVertex) {
+            Vertex<E> correspondingVertex = otherGraph.searchVertex(vertex.getData());
+            if (correspondingVertex == null || vertex.listAdj.size() != correspondingVertex.listAdj.size()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
