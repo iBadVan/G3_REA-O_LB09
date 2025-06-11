@@ -250,4 +250,15 @@ public class GraphLink<E> {
         return startEndCount == 2;
     }
     
+    public boolean isCycle() {
+        for (Vertex<E> vertex : listVertex) {
+            if (getDegree(vertex) != 2) {
+                return false;
+            }
+        }
+        Vertex<E> firstVertex = listVertex.get(0);
+        Vertex<E> lastVertex = listVertex.get(listVertex.size() - 1);
+        return searchEdge(firstVertex.getData(), lastVertex.getData());
+    }
+    
 }
