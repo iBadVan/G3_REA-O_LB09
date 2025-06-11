@@ -278,4 +278,14 @@ public class GraphLink<E> {
         return centerCount == 1 && outerCount == n - 1;
     }
     
+    public boolean isComplete() {
+        int n = listVertex.size();
+        for (Vertex<E> vertex : listVertex) {
+            if (getDegree(vertex) != n - 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
 }
