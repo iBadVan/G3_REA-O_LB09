@@ -228,5 +228,15 @@ public class GraphLink<E> {
     public String toString() {
         return this.listVertex.toString();
     }
+
+    public int getDegree(Vertex<E> vertex) {
+        int degree = 0;
+        for (Edge<E> edge : vertex.listAdj) {
+            degree++;
+        }
+        return degree;
+    }
+
+    
     
 }
