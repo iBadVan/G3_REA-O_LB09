@@ -260,5 +260,22 @@ public class GraphLink<E> {
         Vertex<E> lastVertex = listVertex.get(listVertex.size() - 1);
         return searchEdge(firstVertex.getData(), lastVertex.getData());
     }
+
+    public boolean isWheel() {
+        int n = listVertex.size();
+        int centerCount = 0;
+        int outerCount = 0;
+        for (Vertex<E> vertex : listVertex) {
+            int degree = getDegree(vertex);
+            if (degree == n - 1) {
+                centerCount++;
+            } else if (degree == 3) {
+                outerCount++;
+            } else {
+                return false;
+            }
+        }
+        return centerCount == 1 && outerCount == n - 1;
+    }
     
 }

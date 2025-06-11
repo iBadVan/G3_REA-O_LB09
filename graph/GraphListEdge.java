@@ -226,6 +226,7 @@ public class GraphListEdge<V, E> {
             matrix[j][i] = 1; 
         }
 
+        // Imprimir la matriz de adyacencia
         System.out.println("Matriz de Adyacencia:");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
