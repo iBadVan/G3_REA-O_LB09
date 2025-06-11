@@ -142,6 +142,19 @@ public class GraphListEdge<V, E> {
         return startEndCount == 2;
     }
 
+    public boolean isCycle() {
+        for (VertexObj<V, E> vertex : secVertex) {
+            if (getDegree(vertex) != 2) {
+                return false;
+            }
+        }
+        // Verificar que el primer vértice esté conectado al último
+        VertexObj<V, E> firstVertex = secVertex.get(0);
+        VertexObj<V, E> lastVertex = secVertex.get(secVertex.size() - 1);
+        return secEdge.stream().anyMatch(e -> (e.endVertex1.equals(firstVertex) && e.endVertex2.equals(lastVertex)) ||
+                                               (e.endVertex2.equals(firstVertex) && e.endVertex1.equals(lastVertex)));
+    }
+
     
 
 }
