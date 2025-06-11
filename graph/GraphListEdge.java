@@ -128,6 +128,20 @@ public class GraphListEdge<V, E> {
         return degree;
     }
 
+    public boolean isPath() {
+        int n = secVertex.size();
+        int startEndCount = 0;
+        for (VertexObj<V, E> vertex : secVertex) {
+            int degree = getDegree(vertex);
+            if (degree == 1) {
+                startEndCount++;
+            } else if (degree != 2) {
+                return false;
+            }
+        }
+        return startEndCount == 2;
+    }
+
     
 
 }
