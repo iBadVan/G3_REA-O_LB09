@@ -208,5 +208,32 @@ public class GraphListEdge<V, E> {
         }
     }
 
+    public void printAdjacencyMatrix() {
+        int n = secVertex.size();
+        int[][] matrix = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = 0;
+            }
+        }
+
+        for (EdgeObj<V, E> edge : secEdge) {
+            int i = edge.endVertex1.position;
+            int j = edge.endVertex2.position;
+
+            matrix[i][j] = 1;
+            matrix[j][i] = 1; 
+        }
+
+        System.out.println("Matriz de Adyacencia:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
         
 }
