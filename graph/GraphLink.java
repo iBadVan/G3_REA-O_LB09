@@ -312,5 +312,31 @@ public class GraphLink<E> {
         }
     }
 
-    
+    public void printAdjacencyMatrix() {
+        int n = listVertex.size();
+        int[][] matrix = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = 0;
+            }
+        }
+
+        for (Vertex<E> vertex : listVertex) {
+            for (Edge<E> edge : vertex.listAdj) {
+                int i = listVertex.indexOf(vertex);
+                int j = listVertex.indexOf(edge.getRefDest());
+                matrix[i][j] = 1;
+                matrix[j][i] = 1;
+            }
+        }
+
+        System.out.println("Matriz de Adyacencia:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }
