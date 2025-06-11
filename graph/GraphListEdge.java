@@ -182,4 +182,16 @@ public class GraphListEdge<V, E> {
         return true;
     }
 
+    public void printFormalRepresentation() {
+        System.out.println("Vértices:");
+        for (VertexObj<V, E> vertex : secVertex) {
+            System.out.println(vertex.info); // Imprime cada vértice
+        }
+        
+        System.out.println("Aristas:");
+        for (EdgeObj<V, E> edge : secEdge) {
+            System.out.println(edge.endVertex1.info + " - " + edge.endVertex2.info); // Imprime las aristas
+        }
+    }
+        
 }
