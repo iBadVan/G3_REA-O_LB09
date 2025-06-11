@@ -237,6 +237,17 @@ public class GraphLink<E> {
         return degree;
     }
 
-    
+    public boolean isPath() {
+        int startEndCount = 0;
+        for (Vertex<E> vertex : listVertex) {
+            int degree = getDegree(vertex);
+            if (degree == 1) {
+                startEndCount++;
+            } else if (degree != 2) {
+                return false;
+            }
+        }
+        return startEndCount == 2;
+    }
     
 }
