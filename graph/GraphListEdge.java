@@ -117,4 +117,17 @@ public class GraphListEdge<V, E> {
             }
         }
     }
+
+    public int getDegree(VertexObj<V, E> vertex) {
+        int degree = 0;
+        for (EdgeObj<V, E> edge : secEdge) {
+            if (edge.endVertex1.equals(vertex) || edge.endVertex2.equals(vertex)) {
+                degree++;
+            }
+        }
+        return degree;
+    }
+
+    
+
 }
