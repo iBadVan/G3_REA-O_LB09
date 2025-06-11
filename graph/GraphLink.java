@@ -287,5 +287,18 @@ public class GraphLink<E> {
         }
         return true;
     }
-    
+
+    public void printFormalRepresentation() {
+        System.out.println("Vértices:");
+        for (Vertex<E> vertex : listVertex) {
+            System.out.println(vertex.getData());
+        }
+
+        System.out.println("Aristas:");
+        for (Vertex<E> vertex : listVertex) {
+            for (Edge<E> edge : vertex.listAdj) {
+                System.out.println(vertex.getData() + " - " + edge.getRefDest().getData());
+            }
+        }
+    }
 }
