@@ -155,6 +155,23 @@ public class GraphListEdge<V, E> {
                                                (e.endVertex2.equals(firstVertex) && e.endVertex1.equals(lastVertex)));
     }
 
+    public boolean isWheel() {
+        int n = secVertex.size();
+        int centerCount = 0;
+        int outerCount = 0;
+        for (VertexObj<V, E> vertex : secVertex) {
+            int degree = getDegree(vertex);
+            if (degree == n - 1) {
+                centerCount++;
+            } else if (degree == 3) {
+                outerCount++;
+            } else {
+                return false;
+            }
+        }
+        return centerCount == 1 && outerCount == n - 1;
+    }
+
     
 
 }
