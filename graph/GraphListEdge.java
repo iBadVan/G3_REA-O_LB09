@@ -172,6 +172,14 @@ public class GraphListEdge<V, E> {
         return centerCount == 1 && outerCount == n - 1;
     }
 
-    
+    public boolean isComplete() {
+        int n = secVertex.size();
+        for (VertexObj<V, E> vertex : secVertex) {
+            if (getDegree(vertex) != n - 1) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
