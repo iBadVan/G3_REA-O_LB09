@@ -355,4 +355,120 @@ public class GraphLink<E> {
         return true;
     }
 
+    public boolean isPlanar() {
+        int n = listVertex.size();
+
+        if (n < 5) {
+            return true; 
+        }
+
+        if (n >= 5) {
+            for (int i = 0; i < n - 4; i++) {
+                for (int j = i + 1; j < n - 3; j++) {
+                    for (int k = j + 1; k < n - 2; k++) {
+                        for (int l = k + 1; l < n - 1; l++) {
+                            for (int m = l + 1; m < n; m++) {
+                                // Obtener los 5 vértices
+                                Vertex<E> v1 = listVertex.get(i);
+                                Vertex<E> v2 = listVertex.get(j);
+                                Vertex<E> v3 = listVertex.get(k);
+                                Vertex<E> v4 = listVertex.get(l);
+                                Vertex<E> v5 = listVertex.get(m);
+
+                                if (isCompleteSubgraph(v1, v2, v3, v4, v5)) {
+                                    return false; 
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (n >= 6) {
+            for (int i = 0; i < n - 5; i++) {
+                for (int j = i + 1; j < n - 4; j++) {
+                    for (int k = j + 1; k < n - 3; k++) {
+                        for (int l = k + 1; l < n - 2; l++) {
+                            for (int m = l + 1; m < n - 1; m++) {
+                                for (int o = m + 1; o < n; o++) {
+                                    // Obtener los 6 vértices
+                                    Vertex<E> v1 = listVertex.get(i);
+                                    Vertex<E> v2 = listVertex.get(j);
+                                    Vertex<E> v3 = listVertex.get(k);
+                                    Vertex<E> v4 = listVertex.get(l);
+                                    Vertex<E> v5 = listVertex.get(m);
+                                    Vertex<E> v6 = listVertex.get(o);
+
+                                    if (isBipartiteSubgraph(v1, v2, v3, v4, v5, v6)) {
+                                        return false;  
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return true; 
+    }
+
+    private boolean isCompleteSubgraph(Vertex<E> v1, Vertex<E> v2, Vertex<E> v3, Vertex<E> v4, Vertex<E> v5) {
+        return searchEdge(v1.getData(), v2.getData()) && searchEdge(v1.getData(), v3.getData()) && searchEdge(v1.getData(), v4.getData()) && searchEdge(v1.getData(), v5.getData()) &&
+            searchEdge(v2.getData(), v3.getData()) && searchEdge(v2.getData(), v4.getData()) && searchEdge(v2.getData(), v5.getData()) &&
+            searchEdge(v3.getData(), v4.getData()) && searchEdge(v3.getData(), v5.getData()) &&
+            searchEdge(v4.getData(), v5.getData());
+    }
+
+    private boolean isBipartiteSubgraph(Vertex<E> v1, Vertex<E> v2, Vertex<E> v3, Vertex<E> v4, Vertex<E> v5, Vertex<E> v6) {
+        return searchEdge(v1.getData(), v4.getData()) && searchEdge(v1.getData(), v5.getData()) && searchEdge(v1.getData(), v6.getData()) &&
+            searchEdge(v2.getData(), v4.getData()) && searchEdge(v2.getData(), v5.getData()) && searchEdge(v2.getData(), v6.getData()) &&
+            searchEdge(v3.getData(), v4.getData()) && searchEdge(v3.getData(), v5.getData()) && searchEdge(v3.getData(), v6.getData()) &&
+            !searchEdge(v1.getData(), v2.getData()) && !searchEdge(v1.getData(), v3.getData()) &&
+            !searchEdge(v4.getData(), v5.getData()) && !searchEdge(v4.getData(), v6.getData()) &&
+            !searchEdge(v5.getData(), v6.getData());
+    }
+
+    public boolean isConnected() {
+        if (listVertex.isEmpty()) {
+            return true; 
+        }
+        
+        dfs(listVertex.get(0).getData());
+
+        for (Vertex<E> vertex : listVertex) {
+            if (!vertex.visited) {
+                return false; 
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isAutocomplementary() {
+        GraphLink<E> complementGraph = this.getComplementGraph();
+
+        return this.isIsomorphic(complementGraph);
+    }
+
+    private GraphLink<E> getComplementGraph() {
+        GraphLink<E> complementGraph = new GraphLink<>();
+
+        for (Vertex<E> vertex : listVertex) {
+            complementGraph.insertVertex(vertex.getData());
+        }
+
+        for (Vertex<E> vertex : listVertex) {
+            for (Vertex<E> otherVertex : listVertex) {
+                if (!vertex.equals(otherVertex) && !searchEdge(vertex.getData(), otherVertex.getData())) {
+                    complementGraph.insertEdge(vertex.getData(), otherVertex.getData());
+                }
+            }
+        }
+
+        return complementGraph;
+    }
+
+
 }

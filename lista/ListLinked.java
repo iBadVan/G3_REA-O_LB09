@@ -2,6 +2,8 @@ package lista;
 
 import java.util.Iterator;
 
+import graph.Vertex;
+
 public class ListLinked<T> implements Iterable<T> {
 
     private Node<T> head;
@@ -128,5 +130,15 @@ public class ListLinked<T> implements Iterable<T> {
             }
         }
         return true;
+    }
+
+    public boolean isEmpty() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+    }
+
+    public int indexOf(Vertex<E> vertex) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
     }
 }
