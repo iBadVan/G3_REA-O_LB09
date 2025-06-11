@@ -185,13 +185,28 @@ public class GraphListEdge<V, E> {
     public void printFormalRepresentation() {
         System.out.println("Vértices:");
         for (VertexObj<V, E> vertex : secVertex) {
-            System.out.println(vertex.info); // Imprime cada vértice
+            System.out.println(vertex.info); 
         }
         
         System.out.println("Aristas:");
         for (EdgeObj<V, E> edge : secEdge) {
-            System.out.println(edge.endVertex1.info + " - " + edge.endVertex2.info); // Imprime las aristas
+            System.out.println(edge.endVertex1.info + " - " + edge.endVertex2.info); 
         }
     }
+
+    public void printAdjacencyList() {
+    for (VertexObj<V, E> vertex : secVertex) {
+        System.out.print(vertex.info + ": ");
+        for (EdgeObj<V, E> edge : secEdge) {
+            if (edge.endVertex1.equals(vertex)) {
+                System.out.print(edge.endVertex2.info + " "); 
+            } else if (edge.endVertex2.equals(vertex)) {
+                System.out.print(edge.endVertex1.info + " "); 
+            }
+        }
+        System.out.println();
+    }
+}
+
         
 }
