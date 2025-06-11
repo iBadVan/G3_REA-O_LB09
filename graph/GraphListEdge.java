@@ -195,18 +195,18 @@ public class GraphListEdge<V, E> {
     }
 
     public void printAdjacencyList() {
-    for (VertexObj<V, E> vertex : secVertex) {
-        System.out.print(vertex.info + ": ");
-        for (EdgeObj<V, E> edge : secEdge) {
-            if (edge.endVertex1.equals(vertex)) {
-                System.out.print(edge.endVertex2.info + " "); 
-            } else if (edge.endVertex2.equals(vertex)) {
-                System.out.print(edge.endVertex1.info + " "); 
+        for (VertexObj<V, E> vertex : secVertex) {
+            System.out.print(vertex.info + ": ");
+            for (EdgeObj<V, E> edge : secEdge) {
+                if (edge.endVertex1.equals(vertex)) {
+                    System.out.print(edge.endVertex2.info + " "); 
+                } else if (edge.endVertex2.equals(vertex)) {
+                    System.out.print(edge.endVertex1.info + " "); 
+                }
             }
+            System.out.println();
         }
-        System.out.println();
     }
-}
 
         
 }
